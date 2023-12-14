@@ -3,6 +3,8 @@ package com.augusto.ms.usermicroservice.models;
 import java.io.Serializable;
 import java.util.UUID;
 
+import com.augusto.ms.usermicroservice.dtos.UserRecordDto;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,7 +27,12 @@ public class UserModel implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
-  
+
   private String name;
   private String email;
+
+  public UserModel(UserRecordDto userRecordDto) {
+    this.name = userRecordDto.name();
+    this.email = userRecordDto.email();
+  }
 }

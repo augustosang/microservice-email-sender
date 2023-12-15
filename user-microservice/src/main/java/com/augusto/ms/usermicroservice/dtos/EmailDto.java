@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class EmailDto {
 
-  private UUID id;
+  private UUID userId;
   private String emailTo;
   private String subject;
   private String text;

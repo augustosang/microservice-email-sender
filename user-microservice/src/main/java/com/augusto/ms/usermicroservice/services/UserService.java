@@ -11,12 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
-  
-  @Autowired
-  UserRepository userRepository;
 
-  @Autowired
-  UserProducer userProducer;
+  final UserRepository userRepository;
+  final UserProducer userProducer;
+
+  public UserService(UserRepository userRepository, UserProducer userProducer) {
+    this.userRepository = userRepository;
+    this.userProducer = userProducer;
+  }
 
   @Transactional
   public UserModel save(UserModel user) {

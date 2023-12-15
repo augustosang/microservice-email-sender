@@ -26,13 +26,8 @@ public class UserModel implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private UUID id;
+  private UUID userId;
 
   private String name;
   private String email;
-
-  public UserModel(UserRecordDto userRecordDto) {
-    this.name = userRecordDto.name();
-    this.email = userRecordDto.email();
-  }
 }

@@ -1,0 +1,31 @@
+package com.augusto.ms.usermicroservice.producers;
+
+import com.augusto.ms.usermicroservice.dtos.EmailDto;
+import com.augusto.ms.usermicroservice.models.UserModel;
+import lombok.AllArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
+public class UserProducer {
+
+  final RabbitTemplate rabbitTemplate;
+
+  public UserProducer(RabbitTemplate rabbitTemplate) {
+    this.rabbitTemplate = rabbitTemplate;
+  }
+
+  @Value(value="${broker.queue.email.name}")
+  private String routingKey;
+
+  public void publishMessageEmail(UserModel userModel) {
+    var emailDto = new EmailDto();
+    emailDto.setId(userModel.getId());
+    emailDto.setEmailTo(userModel.getEmail());
+    emailDto.setSubject("Cadastro realizado com sucesso!");
+    emailDto.setText(userModel.getName() + ", seja bem vindo(a)! \nAgradecemos o seu cadastro, aproveite agora ");
+
+    rabbitTemplate.convertAndSend("", routingKey, emailDto);
+  }
+}

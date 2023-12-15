@@ -1,5 +1,6 @@
 package com.augusto.ms.usermicroservice.services;
 
+import com.augusto.ms.usermicroservice.producers.UserProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +15,13 @@ public class UserService {
   @Autowired
   UserRepository userRepository;
 
+  @Autowired
+  UserProducer userProducer;
+
   @Transactional
   public UserModel save(UserModel user) {
-    return userRepository.save(user);
+    user = userRepository.save(user);
+    userProducer.publishMessageEmail(user);
+    return user;
   }
 }
